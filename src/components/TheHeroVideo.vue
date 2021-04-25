@@ -18,7 +18,7 @@ export default {
 .wrapper  {
     width: 100%;
     position: relative;
-    top: 0;
+    top: 5vh;
 }
 
 .wrapper video {

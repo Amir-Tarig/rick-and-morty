@@ -1,14 +1,25 @@
 <template>
-  <div class="home">
-    <TheVideo></TheVideo>
-  </div>
+    <TheHeroVideo />
+   <Suspense>
+     <template #default>
+        <GetEpisodes />
+     </template>
+     <template #fallback>
+       loading...
+     </template>
+   </Suspense>
 </template>
 
 <script>
-import TheVideo from '../components/TheVideo.vue'
+import GetEpisodes from '../components/GetEpisodes.vue'
+
+import TheHeroVideo from '../components/TheHeroVideo.vue'
 
 export default {
   name: 'Home',
-  components: {TheVideo}
+  components: {
+    TheHeroVideo,
+    GetEpisodes,
+  },
 }
 </script>
