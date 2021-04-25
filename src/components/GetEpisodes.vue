@@ -1,6 +1,6 @@
 <template>
    <div class="epi" v-for="epi in episodes.results" :key="epi.id">
-      <p>{{epi.id}}</p><br>
+      <p>{{ epi.name }}</p>
     </div>
 </template>
 
@@ -22,10 +22,8 @@ export default {
 <style scoped>
 .epi {
     border: 1px solid red;
-    height: 100vh;
-    width: 100%;
-    position: absolute  ;
-    top: 50%;
+    
+    
     /* background: black; */
 }
 p {
