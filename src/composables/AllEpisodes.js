@@ -1,18 +1,20 @@
-import { ref } from 'vue' 
+import { reactive, toRefs } from 'vue' 
 
 export default function allEpisodes() {
-    const error = ref(null)
-    const episodes = ref(null)
+    const state = reactive({
+        error: null,
+        episodes: null
+    })
 
     const getEpisodes = async() => {
         try{
             const episodesRes = await fetch ("https://rickandmortyapi.com/api/episode")
-            episodes.value = await episodesRes.json()
+            state.episodes = await episodesRes.json()
         }
         catch(e) {
-            error.value = e
+            state.error = e
         }
 
     }
-    return { error, episodes, getEpisodes }
+    return { ...toRefs(state),  getEpisodes }
 }

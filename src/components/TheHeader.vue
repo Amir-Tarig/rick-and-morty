@@ -72,7 +72,7 @@ export default {
     padding-top: .3em;
     padding-left: 1em;
     padding-right: 1em;
-    background: black;
+    background: #222;
     color: whitesmoke;
     font-family: 'Montez', cursive;
     font-size: 1.4em;

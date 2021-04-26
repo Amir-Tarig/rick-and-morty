@@ -1,5 +1,6 @@
 <template>
-   <div class="epi" v-for="epi in episodes.results" :key="epi.id">
+    <div v-if="error">Something went wrong please try again latter</div>
+   <div v-else class="epi" v-for="epi in episodes.results" :key="epi.id">
       <p>{{ epi.name }}</p>
     </div>
 </template>
@@ -12,7 +13,7 @@ export default {
       const  { error, episodes, getEpisodes } = allEpisodes();
       await getEpisodes();
 
-      console.log(episodes.value.results[0])
+      console.log(episodes.value)
 
       return { episodes , error}
   }
@@ -22,9 +23,6 @@ export default {
 <style scoped>
 .epi {
     border: 1px solid red;
-    
-    
-    /* background: black; */
 }
 p {
     font-size: 2em;

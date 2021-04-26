@@ -21,7 +21,7 @@ export default {
 }
 
 body{
-  background: #fff;
+  background: black;
   font-family: 'Montserrat', sans-serif;
 }
 </style>
