@@ -1,8 +1,6 @@
 <template>
-
  <img class="rickImg" src="@/assets/fuckyou.png" alt="">
     <div class="wrapper">
-            <h1 >Season 5 Starts Sunday, June 20</h1>
             <video autoplay loop muted>
                 <source src="@/assets/tinyrick.mp4">
             </video>
@@ -22,24 +20,11 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap');
-
-
-.container h1 {
-    color: white;
-    display: inline-block;
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%,-10%);
-    font-size: 3em;
-    font-family: 'Lora', serif;
-}
 
 .wrapper  {
     width: 100%;
     position: relative;
-    top: 25%;
+    /* top: 20%; */
     border: 1px solid red;
 }
 
@@ -88,7 +73,7 @@ export default {
     cursor: pointer;
     font-weight: 700;
     font-size: 1.1rem;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     transition: .3s ease-in-out;
     border-radius: 5px;
 }
