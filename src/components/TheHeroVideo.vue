@@ -1,16 +1,19 @@
 <template>
- <img class="rickImg" src="@/assets/fuckyou.png" alt="">
-    <div class="wrapper">
-            <video autoplay loop muted>
-                <source src="@/assets/tinyrick.mp4">
-            </video>
-        <img src="https://media.cdn.adultswim.com/uploads/20200317/203171153217-rick-and-morty.png" alt="Rick and Morty">
-    <div class="btnContainer">
-        <button class="btn">CHARACTERS</button>
-        <button class="btn"> LOCATIONS</button>
-    </div>
-    </div>
-
+ <div class="container">
+      <h1>Season 5 Starts Sunday, June 20</h1>
+      <p>Stay tuned</p>
+        <div class="rickImg"><img  src="@/assets/fuckyou.png" alt=""></div>
+            <div class="wrapper">
+                    <video autoplay loop muted>
+                        <source src="@/assets/tinyrick.mp4">
+                    </video>
+                <img src="https://media.cdn.adultswim.com/uploads/20200317/203171153217-rick-and-morty.png" alt="Rick and Morty">
+         <div class="btnContainer">
+            <button class="btn">CHARACTERS</button>
+            <button class="btn"> LOCATIONS</button>
+          </div>
+        </div>
+ </div>
 </template>
 
 <script>
@@ -21,11 +24,33 @@ export default {
 
 <style scoped>
 
+.container {
+    /* border: 1px solid red; */
+    position: relative;
+}
+
+.container  h1 {
+    color: white;
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%, 5%);
+    font-size: 3rem;
+    font-family: 'Lora', serif;
+}
+
+.container p {
+    color: white;
+    position: absolute;
+    left: 50%;
+    top: 18%;
+    transform: translate(-50%, 18%);
+}
 .wrapper  {
     width: 100%;
     position: relative;
-    /* top: 20%; */
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .wrapper video {
@@ -46,12 +71,14 @@ export default {
 
 .rickImg{
     width: 200px;
-    display: block;
-    position: absolute;
-    top: 3%;
-    right: 0;
-    z-index: 20;
     transform: rotateY(180deg);
+    margin-left: auto;
+    /* border: 1px solid red; */
+    
+}
+
+.rickImg img{
+    width: 100%;
 }
 
 .btnContainer {

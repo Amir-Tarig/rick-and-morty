@@ -1,11 +1,11 @@
 <template>
-       <div v-if="error">Something went wrong please try again latter</div>
+       <div class="error" v-if="error">Something went wrong please try again latter</div>
      <Suspense v-else>
         <template #default>
             <AsyncCharacters />
         </template>
         <template #fallback>
-          loading...
+          <div class="loading">loading...</div>
         </template>
      </Suspense>
 </template>
@@ -23,7 +23,22 @@ export default {
       error.value = e
     })
 
-  return {error}
+  return { error }
   }
 }
 </script>
+
+<style scoped>
+.error {
+  color: white;
+}
+
+.loading{
+  color: white;
+  font-size: 2em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+</style>
