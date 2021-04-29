@@ -2,7 +2,7 @@
       <TheHeroVideo />
     <div class="trailerContainer">
         <div id="video">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/F6Zy_mLgSNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/F6Zy_mLgSNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
         </div>
         <div id="dis">
             <h2>RICK AND MORTY SEASON 5 UNCENSORED TRAILER!</h2>
