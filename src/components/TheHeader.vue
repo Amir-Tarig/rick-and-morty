@@ -93,7 +93,7 @@ export default {
     font-family: 'Montez', cursive;
     font-size: 1.4em;
 }
-
+/* 
 .header form {
     height: 80%;
     display: flex;
@@ -118,6 +118,6 @@ form input[type=text] {
 
 #btn:hover{
     cursor: pointer;
-}
+} */
 
 </style>

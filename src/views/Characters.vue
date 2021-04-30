@@ -1,10 +1,10 @@
 <template>
-   <form  id="form">
-           <input type="text"   placeholder="Search characters" >
+      <form  id="form" @submit.prevent="handleSearch">
+           <input type="text"  placeholder="Search characters" >
            <button id="btn" aria-label="search" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><path d="M19.7,18.3L16,14.6A9.1,9.1,0,0,0,18,9a9,9,0,1,0-9,9,8.53,8.53,0,0,0,5.6-2l3.7,3.7a1,1,0,0,0,1.4,0A1,1,0,0,0,19.7,18.3ZM2,9A7,7,0,0,1,16,9a7,7,0,0,1-2,4.9h0a6.8,6.8,0,0,1-4.9,2A6.84,6.84,0,0,1,2,9Z"></path></svg></button>
        </form>
  <div class="charContainer" >
-        <div class="error" v-if="error">Something went wrong please try again latter</div>
+    <div class="error" v-if="error">Something went wrong please try again latter</div>
        <div  v-else class="innerWrapper" v-for="char in character.results" :key="char.id">
                       <img class="artWork" :src="char.image" :alt="char.name + ' ' + 'image'">
                       <div class="charDetails">
@@ -16,6 +16,11 @@
                       </div>
         </div>
  </div>
+
+ <div @click="fetchPage" class="arrows">
+     <span class="rightA">&#187;</span>
+     <span class="leftA">&#171;</span>
+ </div>
 </template>
 
 <script>
@@ -24,16 +29,40 @@ import { onMounted, ref } from 'vue'
 
 export default {
  setup() {
-       const character = ref([])
+       let API = `https://rickandmortyapi.com/api/character/`
+       let character = ref([])
        const error = ref(null)
        const loading = ref(true)
+       let nextPage = ref('')
+       let prevPage = ref('')
 
-       
-    
-    
+       function fetchPage(e) {
+           if(e.target.classList == "rightA") {
+               if(character.value.info.next !== null){
+                   console.log(character.value.info.next)
+                   nextPage.value = character.value.info.next
+                   character.value = []
+                   fetch(nextPage.value)
+                   .then(res => res.json())
+                   .then(char => character.value = char)
+               }
+           }else if (e.target.classList == "leftA") {
+                if(character.value.info.prev !== null){
+                    console.log(character.value.info.prev)
+                   prevPage.value = character.value.info.prev
+                   character.value = []
+                   fetch(prevPage.value)
+                   .then(res => res.json())
+                   .then(char => character.value = char)
+               }
+           }
+       }
+
         function fetchData () {
+            console.log(API)
             loading.value = true;
-                fetch (`https://rickandmortyapi.com/api/character/`)
+
+                fetch (API)
                 .then(res => {
                     if(!res.ok){
                         const error =  new Error("Somthing went wrong try agian latter" + " " + res.statusText)
@@ -60,7 +89,7 @@ export default {
                fetchData()
            })
 
-        return { character, error ,loading }
+        return { character, error ,loading, fetchPage, nextPage, prevPage }
   }
 }
 </script>
@@ -116,18 +145,21 @@ export default {
 form {
     display: flex;
     padding: 1em;
-    width: fit-content;
-    margin-left: auto;
+    width: 20rem;
+    margin: auto;
 }
 
 form input[type=text] {
     order: 1;
     appearance: none;
+    color: white;
     background: none;
-    border: none;
-    box-shadow: 0 0 5px rgba(255, 255, 255, .5);
+    border: 1px solid white;
+    /* box-shadow: 0 0 5px rgba(255, 255, 255, .5); */
     outline: none;
     padding: 0 2em 0 10px;
+    border-left: none;
+    width: 100%;
 }
 
 ::placeholder {
@@ -139,7 +171,10 @@ form input[type=text] {
     background: none;
     outline: none;
     padding: .5em;
-    border: none;
+    border: 1px solid white;
+    border-right: none;
+    border-bottom-left-radius: 20px;
+
 }
 
 #btn:hover{
@@ -148,5 +183,28 @@ form input[type=text] {
 
 #btn svg {
     fill: whitesmoke;
+}
+
+.arrows{
+    height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.rightA{
+   font-size: 4em;
+   color: white;
+   height: fit-content;
+   order: 1;
+   cursor: pointer;
+}
+
+.leftA{
+   font-size: 4em;
+   color: white;
+   height: fit-content;
+   cursor: pointer;
+
 }
 </style>
