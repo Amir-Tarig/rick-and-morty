@@ -5,8 +5,9 @@
                <button id="btn" aria-label="search" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><path d="M19.7,18.3L16,14.6A9.1,9.1,0,0,0,18,9a9,9,0,1,0-9,9,8.53,8.53,0,0,0,5.6-2l3.7,3.7a1,1,0,0,0,1.4,0A1,1,0,0,0,19.7,18.3ZM2,9A7,7,0,0,1,16,9a7,7,0,0,1-2,4.9h0a6.8,6.8,0,0,1-4.9,2A6.84,6.84,0,0,1,2,9Z"></path></svg></button>
            </form> 
          <transition-group tag="div" appear @before-enter="beforeEnter" @enter="enter" class="charContainer" >
-            <div key="error" class="error" v-if="error">Something went wrong please try again latter</div>
+            <div key="error" class="error" v-if="error">Something went wrong please try again later</div>
             <div key="loading" v-if="loading" class="loading">loading...</div>
+            <div key="matching" v-if="!noMatching" class="noMatching">Sorry, no matching found.!!</div>
                <div v-else class="innerWrapper" v-for="(char, index) in character.results" :data-index="index" :key="char.id">
                              <img :key="char.id" class="artWork" :src="char.image" :alt="char.name + ' ' + 'image'">
                              <div :key="char.id" class="charDetails">
@@ -38,6 +39,7 @@ export default {
        let nextPage = ref('')
        let prevPage = ref('')
        const inputValue = ref(null)
+       let noMatching = ref(true)
 
        const beforeEnter = (el) => {
             el.style.opacity = 0;
@@ -57,7 +59,11 @@ export default {
        function handleSearch() {
            character.value = []
            fetch(API + `?name=${inputValue.value}`)
-           .then((res) => res.json())
+           .then((res) =>{
+               if(!res.ok) noMatching.value = false;
+               else noMatching.value = true;
+                return res.json()
+           })
            .then(data => character.value = data)
        }
 
@@ -90,7 +96,7 @@ export default {
                 fetch (API)
                 .then(res => {
                     if(!res.ok){
-                        const error =  new Error("Somthing went wrong try agian latter" + " " + res.statusText)
+                        const error =  new Error(res.statusText)
                         error.json = res.json();
                         throw error;
                     }
@@ -113,7 +119,7 @@ export default {
                fetchData()
            })
 
-        return {beforeEnter, enter, character, error ,loading, fetchPage, nextPage, prevPage, handleSearch, inputValue }
+        return {noMatching ,beforeEnter, enter, character, error ,loading, fetchPage, nextPage, prevPage, handleSearch, inputValue }
   }
 }
 </script>
@@ -124,7 +130,7 @@ export default {
     min-height: 100vh;
 }
 
-.error , .loading{
+.error , .loading, .noMatching{
     color: white;
     width: fit-content;
     margin: auto;
@@ -134,7 +140,7 @@ export default {
     /* border: 1px solid red; */
     color: white;
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr) );
+   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr) );
    grid-gap: 20px;
    padding:  1em;
    position: relative;
