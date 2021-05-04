@@ -4,6 +4,7 @@
                <input type="text" v-model="inputValue"  placeholder="Search characters" >
                <button id="btn" aria-label="search" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><path d="M19.7,18.3L16,14.6A9.1,9.1,0,0,0,18,9a9,9,0,1,0-9,9,8.53,8.53,0,0,0,5.6-2l3.7,3.7a1,1,0,0,0,1.4,0A1,1,0,0,0,19.7,18.3ZM2,9A7,7,0,0,1,16,9a7,7,0,0,1-2,4.9h0a6.8,6.8,0,0,1-4.9,2A6.84,6.84,0,0,1,2,9Z"></path></svg></button>
            </form> 
+
          <transition-group tag="div" appear @before-enter="beforeEnter" @enter="enter" class="charContainer" >
             <div key="error" class="error" v-if="error">Something went wrong please try again later</div>
             <div key="loading" v-if="loading" class="loading">loading...</div>
@@ -14,12 +15,14 @@
                                     <p><span>Name :</span>  {{ char.name }}</p>
                                     <p><span>Species :</span>  {{char.species}}</p>
                                     <p><span>Status :</span>  {{char.status}}</p>
-                                    <p><span>Origin :</span>  {{char.origin.name}}</p>
-                                    <p><span>Current location :</span>  {{char.location.name}}</p>
+                                    <p><span>Origin :</span> <router-link class="link" :to="{ name: 'TheLocations'}">{{ char.origin.name }}</router-link></p>
+                                    <p><span>Current location :</span>  {{ char.location.name }}</p>
                             </div>
                 </div>
          </transition-group>
+
  </div>
+      <router-view :key="$route.path"></router-view>
  <div @click="fetchPage" class="arrows">
      <span  class="rightA">&#187;</span>
      <span  class="leftA">&#171;</span>
@@ -102,7 +105,10 @@ export default {
                     }
                     return res.json()
                 })
-                .then(char => character.value = char)
+                .then(char => {
+                    character.value = char
+                    console.log(char)
+                    })
                 .catch((err) => {
                     error.value = err;
                     if(err.json) {

@@ -4,7 +4,6 @@
        <nav>
              <router-link class="link" to="/">Home</router-link> 
              <router-link class="link" to="/characters">Characters</router-link> 
-             <router-link class="link" to="/locations">Locations</router-link> 
        </nav>
        <!-- <form  id="form" v-show="visible">
            <input type="text"   placeholder="Search characters" >
