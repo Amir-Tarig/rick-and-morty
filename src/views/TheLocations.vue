@@ -1,11 +1,11 @@
 <template>
-  <div>dfdf</div> 
+  <div>dfdfdfd</div> 
  <router-view ></router-view>
 </template>
 
 <script>
 export default {
-
+ 
 }
 </script>
 

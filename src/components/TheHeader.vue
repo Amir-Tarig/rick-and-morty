@@ -1,9 +1,9 @@
-<template>
+<template >
      <header  class="header" >
          <div class="logo">[ Rick & Morty ]</div>
-       <nav>
-             <router-link class="link" to="/">Home</router-link> 
-             <router-link class="link" to="/characters">Characters</router-link> 
+       <nav >
+             <router-link  class="link" to="/">Home</router-link> 
+             <router-link  class="link" to="/characters">Characters</router-link> 
        </nav>
        <!-- <form  id="form" v-show="visible">
            <input type="text"   placeholder="Search characters" >

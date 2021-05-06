@@ -1,4 +1,5 @@
 <template>
+<router-link class="link" to="/TheLocations">Click me</router-link>
  <div class="body">
           <form  id="form" @submit.prevent="handleSearch">
                <input type="text" v-model="inputValue"  placeholder="Search characters" >
@@ -15,14 +16,14 @@
                                     <p><span>Name :</span>  {{ char.name }}</p>
                                     <p><span>Species :</span>  {{char.species}}</p>
                                     <p><span>Status :</span>  {{char.status}}</p>
-                                    <p><span>Origin :</span> <router-link class="link" :to="{ name: 'TheLocations'}">{{ char.origin.name }}</router-link></p>
+                                    <p><span>Origin :</span> <router-link @click="emitUrl(char.origin.url)" class="link" :to="{ name: 'TheLocations', params: {originName: char.origin.name.replace(' ', '-')}}">{{ char.origin.name }}</router-link></p>
                                     <p><span>Current location :</span>  {{ char.location.name }}</p>
                             </div>
                 </div>
          </transition-group>
 
  </div>
-      <router-view :key="$route.path"></router-view>
+      <router-view></router-view>
  <div @click="fetchPage" class="arrows">
      <span  class="rightA">&#187;</span>
      <span  class="leftA">&#171;</span>
@@ -34,7 +35,7 @@
 import { onMounted, ref } from 'vue'
 import gsap from 'gsap'
 export default {
- setup() {
+ setup(props, {emit}) {
        let API = `https://rickandmortyapi.com/api/character/`
        let character = ref([])
        const error = ref(null)
@@ -43,6 +44,11 @@ export default {
        let prevPage = ref('')
        const inputValue = ref(null)
        let noMatching = ref(true)
+
+       function emitUrl(url) {
+           emit('location', url)
+        //    console.log(url)
+       }
 
        const beforeEnter = (el) => {
             el.style.opacity = 0;
@@ -125,7 +131,9 @@ export default {
                fetchData()
            })
 
-        return {noMatching ,beforeEnter, enter, character, error ,loading, fetchPage, nextPage, prevPage, handleSearch, inputValue }
+        return {emitUrl, noMatching,beforeEnter, enter, 
+        character, error ,loading, fetchPage, 
+        nextPage, prevPage, handleSearch, inputValue }
   }
 }
 </script>
@@ -158,7 +166,7 @@ export default {
 }
 
 .innerWrapper{
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.09);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     display: grid;
