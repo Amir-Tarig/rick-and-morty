@@ -32,10 +32,12 @@
 
 <script>
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref ,getCurrentInstance} from 'vue'
 import gsap from 'gsap'
+// import  emitter  from '../main'
+
 export default {
- setup(props, {emit}) {
+ setup() {
        let API = `https://rickandmortyapi.com/api/character/`
        let character = ref([])
        const error = ref(null)
@@ -45,8 +47,11 @@ export default {
        const inputValue = ref(null)
        let noMatching = ref(true)
 
+       const internalInstance = getCurrentInstance(); 
+       const emitter = internalInstance.appContext.config.globalProperties.emitter;
+
        function emitUrl(url) {
-           emit('location', url)
+           emitter.emit('location', url)
         //    console.log(url)
        }
 
