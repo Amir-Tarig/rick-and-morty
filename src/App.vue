@@ -1,5 +1,6 @@
 <template >
-<TheHeader /><br>
+<TheHeader />
+ <router-view :key="$route.path"/>
 </template>
 
 <script>

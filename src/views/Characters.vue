@@ -1,5 +1,4 @@
 <template>
-<router-link class="link" to="/TheLocations">Click me</router-link>
  <div class="body">
           <form  id="form" @submit.prevent="handleSearch">
                <input type="text" v-model="inputValue"  placeholder="Search characters" >
@@ -16,7 +15,7 @@
                                     <p><span>Name :</span>  {{ char.name }}</p>
                                     <p><span>Species :</span>  {{char.species}}</p>
                                     <p><span>Status :</span>  {{char.status}}</p>
-                                    <p><span>Origin :</span> <router-link @click="emitUrl(char.origin.url)" class="link" :to="{ name: 'TheLocations', params: {originName: char.origin.name.replace(' ', '-')}}">{{ char.origin.name }}</router-link></p>
+                                    <p><span>Origin :</span> <router-link  class="link" :to="{ name: 'TheLocations', params: {originName: char.origin.name}}">{{ char.origin.name }}</router-link></p>
                                     <p><span>Current location :</span>  {{ char.location.name }}</p>
                             </div>
                 </div>
@@ -32,9 +31,8 @@
 
 <script>
 
-import { onMounted, ref ,getCurrentInstance} from 'vue'
+import { onMounted, ref } from 'vue'
 import gsap from 'gsap'
-// import  emitter  from '../main'
 
 export default {
  setup() {
@@ -46,14 +44,6 @@ export default {
        let prevPage = ref('')
        const inputValue = ref(null)
        let noMatching = ref(true)
-
-       const internalInstance = getCurrentInstance(); 
-       const emitter = internalInstance.appContext.config.globalProperties.emitter;
-
-       function emitUrl(url) {
-           emitter.emit('location', url)
-        //    console.log(url)
-       }
 
        const beforeEnter = (el) => {
             el.style.opacity = 0;
@@ -84,7 +74,7 @@ export default {
        function fetchPage(e) {
            if(e.target.classList == "rightA") {
                if(character.value.info.next !== null){
-                   console.log(character.value.info.next)
+                //    console.log(character.value.info.next)
                    nextPage.value = character.value.info.next
                    character.value = []
                    fetch(nextPage.value)
@@ -93,7 +83,7 @@ export default {
                }
            } else if (e.target.classList == "leftA") {
                 if(character.value.info.prev !== null){
-                    console.log(character.value.info.prev)
+                    // console.log(character.value.info.prev)
                    prevPage.value = character.value.info.prev
                    character.value = []
                    fetch(prevPage.value)
@@ -118,7 +108,7 @@ export default {
                 })
                 .then(char => {
                     character.value = char
-                    console.log(char)
+                    // console.log(character.value)
                     })
                 .catch((err) => {
                     error.value = err;
@@ -136,7 +126,7 @@ export default {
                fetchData()
            })
 
-        return {emitUrl, noMatching,beforeEnter, enter, 
+        return { noMatching,beforeEnter, enter, 
         character, error ,loading, fetchPage, 
         nextPage, prevPage, handleSearch, inputValue }
   }

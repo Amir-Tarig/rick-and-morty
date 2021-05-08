@@ -15,6 +15,7 @@ const routes = [
   {
     path: '/:originName',
     name: "TheLocations",
+    props: true ,
     component: () => import(/* webpackChunkName: "TheLocations" */ '../views/TheLocations.vue')
   },
   
