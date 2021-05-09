@@ -15,7 +15,7 @@
                                     <p><span>Name :</span>  {{ char.name }}</p>
                                     <p><span>Species :</span>  {{char.species}}</p>
                                     <p><span>Status :</span>  {{char.status}}</p>
-                                    <p><span>Origin :</span> <router-link  class="link" :to="{ name: 'TheLocations', params: {originName: char.origin.name}}">{{ char.origin.name }}</router-link></p>
+                                    <p><span>Origin :</span> <router-link  class="link" :to="{ name: 'TheLocations', params: {originName: char.location.name}}">{{ char.origin.name }}</router-link></p>
                                     <p><span>Current location :</span>  {{ char.location.name }}</p>
                             </div>
                 </div>

@@ -6,16 +6,13 @@
   </div> 
 
   <div class="container">
-    <div class="resLoading" v-if="residentsLoading">Loading Location residents...</div>
-    <div class="resError" v-else-if="residentsError">Something went wrong pleace try again later</div>
-
-    <div class="div" >
-      <div class="characterContainer" v-for="char in residents" :key="char.id">
-        <div class="imgContainer"><img :src="char.image" alt=""></div>
-      </div>
+    <p class="resLoading" v-if="residentsLoading">Loading residents</p>
+    <p class="resError" v-if="residentsError">Something went wrong, Please try again later !!!</p>
+    <div class="charContainer" v-for="res in residents" :key="res.id">
+      <div class="imgContainer"><img :src="res.image" alt=""></div>
+      <div class="details"></div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -30,16 +27,46 @@ export default {
   const loading = ref(false)
   const location = ref([])
   const error = ref(null)
-  const residents = ref([])
+
   const residentsLoading = ref(false)
+  const residents = ref([])
   const residentsError = ref(null)
 
+ 
+  function fetchChar(url) {
+    residentsLoading.value = true
+    let obj = [...url]
+
+    obj.map(char => {
+      fetch(char)
+      .then(res => {
+        if(!res.ok) {
+          const error = new Error(res.statusText)
+          error.json = res.json()
+          throw Error
+        }
+        return res.json()
+      })
+      .then(data => {
+        residents.value.push(data)
+        })
+        .catch((err) => {
+          residentsError.value = err
+          if(err.json) {
+            return err.json.then(json => {
+              residentsError.value.message = json.message
+            })
+          }
+        })
+        .then(() => residentsLoading.value = false)
+    })
+  } 
+
+
+ 
   function fetchData() {
     loading.value = true;
-    return fetch(`https://rickandmortyapi.com/api/location/?name=${props.originName}`,{
-      method: 'get',
-      headers: {'content-type': 'application/json'}
-    })
+    return fetch(`https://rickandmortyapi.com/api/location/?name=${props.originName}`)
     .then(res => {
       if(!res.ok) {
         const error = new Error(res.statusText);
@@ -50,7 +77,10 @@ export default {
     })
     .then(data =>{
        location.value = data.results
-       fetchResidents([...location.value[0].residents])
+      //  residents.value = location.value[0].residents
+      //  fetchResidents([...location.value[0].residents])
+      fetchChar(location.value[0].residents)
+      // console.log(location.value[0].residents)
     })
     .catch(err => {
       error.value = err;
@@ -63,41 +93,11 @@ export default {
     .then(() => loading.value = false)
   } 
 
-  function fetchResidents(residents){
-    residentsLoading.value = true
-
-     const char = residents
-     char.map(el => {
-       fetch(el)
-       .then(res => {
-         if(!res.ok) {
-           const error = new Error (res.statusText)
-           error.json = res.json()
-           throw error
-         }
-         return res.json()
-       })
-       .then(data => {
-         residents.value = data;
-         console.log(residents.value.image)
-       })
-       .catch(err => {
-          residentsError.value = err
-          if(err.json) {
-            return err.json.then(json => {
-              residentsError.value = json.message
-            })
-          }
-       })
-       .then(() => residentsLoading.value = false)
-     })
-  }
-
-  onMounted(() => {
+ onMounted(() => {
     fetchData()
-  })
+})
 
-  return {location, error, loading, residents, residentsError, residentsLoading }
+  return { location, error, loading, residents, residentsError, residentsLoading }
  }
 };
 </script>
@@ -112,7 +112,8 @@ div {
 
 .div{
   background: rgba(255, 255, 255, .5);
-  border: 1px solid;
+  border: 1px solid red;
+  height: 400px;
 }
 
 .resLoading, .resError{
