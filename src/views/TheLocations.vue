@@ -8,9 +8,14 @@
   <div class="container">
     <p class="resLoading" v-if="residentsLoading">Loading residents</p>
     <p class="resError" v-if="residentsError">Something went wrong, Please try again later !!!</p>
+   
     <div class="charContainer" v-for="res in residents" :key="res.id">
       <div class="imgContainer"><img :src="res.image" alt=""></div>
-      <div class="details"></div>
+      <ul class="details">
+          <li>{{res.name}}</li>
+          <li>{{res.species}}</li>
+          <li>{{res.status}}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -49,6 +54,7 @@ export default {
       })
       .then(data => {
         residents.value.push(data)
+        console.log(data)
         })
         .catch((err) => {
           residentsError.value = err
@@ -80,7 +86,6 @@ export default {
       //  residents.value = location.value[0].residents
       //  fetchResidents([...location.value[0].residents])
       fetchChar(location.value[0].residents)
-      // console.log(location.value[0].residents)
     })
     .catch(err => {
       error.value = err;
@@ -103,8 +108,13 @@ export default {
 </script>
 
 <style scoped>
+.details {
+  list-style-type: none;
+}
 
-
+.imgContainer img{
+  width: 100%;
+}
 
 div {
     color: white;
@@ -116,7 +126,7 @@ div {
   height: 400px;
 }
 
-.resLoading, .resError{
+.resLoading, .resError, .residentsLoading{
   color: white;
 }
 </style>
