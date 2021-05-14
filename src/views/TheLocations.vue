@@ -1,27 +1,28 @@
 <template>
-  <div v-for="loc in location" :key="loc.id">
-      <p>Dimention: {{ loc.dimension }}</p>
-      <p>Name: {{ loc.name }}</p>
-      <p>Type: {{ loc.type }}</p>
+     <p class="resLoading" v-if="loading">Loading residents</p>
+      <p class="resError" v-if="error">We couldn't display the dimention details !!!</p>
+  <div class="location" v-for="loc in location" :key="loc.id">
+      <p><span>Dimention : </span> {{ loc.dimension }}</p>
+      <p><span>Name : </span> {{ loc.name }}</p>
+      <p><span>Type : </span> {{ loc.type }}</p>
   </div> 
 
-  <div class="container">
-    <p class="resLoading" v-if="residentsLoading">Loading residents</p>
-    <p class="resError" v-if="residentsError">Something went wrong, Please try again later !!!</p>
-   
-    <div class="charContainer" v-for="res in residents" :key="res.id">
-      <div class="imgContainer"><img :src="res.image" alt=""></div>
-      <ul class="details">
-          <li>{{res.name}}</li>
-          <li>{{res.species}}</li>
-          <li>{{res.status}}</li>
-      </ul>
-    </div>
+  <div  class="container">
+      <p class="residentsLoading" v-if="residentsLoading">Loading residents</p>
+      <p class="residentsError" v-if="residentsError">We couldn't display the residents please try again later !!!</p>
+        <div class="charContainer" v-for="res in residents" :key="res.id">
+            <div class="imgContainer"><img :src="res.image" alt=""></div>
+            <ul  class="details">
+                <li>{{res.name}}</li>
+                <li>{{res.species}}</li>
+                <li>{{res.status}}</li>
+            </ul>
+        </div>
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted,  ref } from 'vue';
 
 export default {
   props: {
@@ -37,7 +38,7 @@ export default {
   const residents = ref([])
   const residentsError = ref(null)
 
- 
+
   function fetchChar(url) {
     residentsLoading.value = true
     let obj = [...url]
@@ -46,21 +47,20 @@ export default {
       fetch(char)
       .then(res => {
         if(!res.ok) {
-          const error = new Error(res.statusText)
+          const error = new Error (res.statusText)
           error.json = res.json()
-          throw Error
+          throw error
         }
         return res.json()
       })
       .then(data => {
         residents.value.push(data)
-        console.log(data)
         })
         .catch((err) => {
           residentsError.value = err
           if(err.json) {
-            return err.json.then(json => {
-              residentsError.value.message = json.message
+            return err.json.then(mes => {
+              residentsError.value.message = mes.message
             })
           }
         })
@@ -69,7 +69,6 @@ export default {
   } 
 
 
- 
   function fetchData() {
     loading.value = true;
     return fetch(`https://rickandmortyapi.com/api/location/?name=${props.originName}`)
@@ -99,21 +98,74 @@ export default {
   } 
 
  onMounted(() => {
-    fetchData()
+   fetchData()
 })
+
 
   return { location, error, loading, residents, residentsError, residentsLoading }
  }
-};
+}
 </script>
 
 <style scoped>
+
+
+.location {
+  padding: 1em 0;
+  line-height: 2;
+  width: fit-content;
+  margin: auto;
+}
+
+.location p {
+  font-size: 1.1em;
+}
+
+.location span {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1.1em;
+}
+
+.container {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  height: 80vh;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+}
+
+
+.charContainer {
+  display: flex;
+  flex-direction: column;
+  margin: .5em;
+  align-items: center;
+  padding: 1em 0;
+  transition: .5s ease-in-out;
+  scroll-snap-align: start;
+}
+
+
 .details {
-  list-style-type: none;
+  list-style-type: circle;
+  list-style-position: inside;
+  background: rgba(255, 255, 255, .1);
+  color: white;
+  /* border: 1px solid red; */
+  width: 100%;
+}
+
+.imgContainer{
+  width: 200px ;
 }
 
 .imgContainer img{
   width: 100%;
+  border-radius: 20px;
 }
 
 div {
@@ -126,7 +178,9 @@ div {
   height: 400px;
 }
 
-.resLoading, .resError, .residentsLoading{
+.resLoading, .resError, .residentsLoading, .residentsError{
   color: white;
+  text-align: center;
+  padding-top: 2em;
 }
 </style>

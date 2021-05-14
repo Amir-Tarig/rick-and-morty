@@ -122,6 +122,7 @@ export default {
                     loading.value = false
                 })
         }
+
            onMounted(() => {
                fetchData()
            })
@@ -135,8 +136,9 @@ export default {
 
 <style scoped>
 .body {
-    max-height: 100%;
+    max-height: 100vh;
     min-height: 100vh;
+    
 }
 
 .error , .loading, .noMatching{

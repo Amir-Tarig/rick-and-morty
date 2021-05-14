@@ -21,8 +21,11 @@ export default {
  box-sizing: border-box;
 }
 
+
 body{
   background: black;
   font-family: 'Montserrat', sans-serif;
+  /* scroll-snap-type: y mandatory;
+  overflow: hidden; */
 }
 </style>
