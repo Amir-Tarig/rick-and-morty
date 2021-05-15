@@ -136,9 +136,8 @@ export default {
 
 <style scoped>
 .body {
-    max-height: 100vh;
+    max-height: 100%;
     min-height: 100vh;
-    
 }
 
 .error , .loading, .noMatching{
@@ -263,5 +262,13 @@ form input[type=text] {
 
 .leftA:hover , .rightA:hover {
     color: white;
+}
+
+.link {
+    color: white;
+}
+
+.link:hover {
+    color: blue;
 }
 </style>

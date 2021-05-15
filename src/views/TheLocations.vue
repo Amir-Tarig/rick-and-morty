@@ -108,8 +108,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .location {
   padding: 1em 0;
   line-height: 2;
@@ -136,6 +134,11 @@ export default {
   height: 80vh;
   overflow: auto;
   scroll-snap-type: y mandatory;
+  /* scrollbar-width: none; */
+}
+
+.container::-webkit-scrollbar {
+  width: 0;
 }
 
 
@@ -157,7 +160,9 @@ export default {
   color: white;
   /* border: 1px solid red; */
   width: 100%;
+  line-height: 1.5;
 }
+
 
 .imgContainer{
   width: 200px ;

@@ -5,31 +5,31 @@
              <router-link  class="link" to="/">Home</router-link> 
              <router-link  class="link" to="/characters">Characters</router-link> 
        </nav>
-       <!-- <form  id="form" v-show="visible">
-           <input type="text"   placeholder="Search characters" >
-           <button id="btn" aria-label="search" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><path d="M19.7,18.3L16,14.6A9.1,9.1,0,0,0,18,9a9,9,0,1,0-9,9,8.53,8.53,0,0,0,5.6-2l3.7,3.7a1,1,0,0,0,1.4,0A1,1,0,0,0,19.7,18.3ZM2,9A7,7,0,0,1,16,9a7,7,0,0,1-2,4.9h0a6.8,6.8,0,0,1-4.9,2A6.84,6.84,0,0,1,2,9Z"></path></svg></button>
-       </form> -->
+
+       <div @click="handle" class="burger">
+           <div class="line one"></div>
+           <div class="line two"></div>
+           <div class="line three"></div>
+       </div>
      </header>
 </template>
 
 <script>
-// import {ref, watchEffect } from 'vue'
-// import {useRouter } from 'vue-router'
+// import {ref} from 'vue'
 
 export default {
-//  setup() {
-//     const router = useRouter()
-//     let visible = ref(null);
-  
-//     watchEffect(()  => {
-//         if(router.currentRoute.value.fullPath === "/characters") {
-//             visible.value = 1
-//         } else { visible.value = 0 }
-//     })
+    setup() {
 
-   
-//     return {visible }
-//   },
+        function handle(e) {
+            // const one  = e.path[1].querySelector('.one')
+            // const two  = e.path[1].querySelector('.two')
+            // const three  = e.path[1].querySelector('.three')
+            const container = e.path[1]
+            container.classList.toggle('change')
+        }
+
+        return { handle }
+    }
 }
 </script>
 
@@ -39,13 +39,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 5vh;
+    height: 6vh;
     background: whitesmoke;
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     width: 100%;
     z-index: 10;
+    border: 1px solid red;
 }
 
 .header nav {
@@ -91,31 +92,47 @@ export default {
     font-family: 'Montez', cursive;
     font-size: 1.4em;
 }
-/* 
-.header form {
-    height: 80%;
-    display: flex;
-    padding-right: 1em;
+
+.burger {
+    display:  none;
 }
 
-form input[type=text] {
-    order: 1;
-    appearance: none;
-    background: none;
-    border: none;
-    outline: none;
-    padding: 5px;
+@media screen and (max-width: 800px) {
+    .header nav {
+        display: none;
+    }
+
+    .burger {
+        display: inline-block;
+        cursor: pointer;
+        /* border: 1px solid red; */
+        position: relative;
+        right: 10px;
+        transform: rotate(180deg);
+    }
+
+    .line{
+        width: 35px;
+        height: 4px;
+        background: black;
+        margin-top: 5px;
+        border-radius: 2px;
+        transition: .5s;
+    }
+    .change .one {
+    -webkit-transform: rotate(-45deg) translate(-7px, 6px);
+    transform: rotate(-45deg) translate(-7px, 6px);
+    background: red;
+    }
+
+    .change .two {
+        width: 0;
+    }
+
+    .change .three {
+        -webkit-transform: rotate(45deg) translate(-7px, -6px) ;
+        transform: rotate(45deg) translate(-7px, -6px) ;
+        background: red;
+    }
 }
-
-#btn{
-    background: none;
-    outline: none;
-    border: none;
-    padding: .5em;
-}
-
-#btn:hover{
-    cursor: pointer;
-} */
-
 </style>
