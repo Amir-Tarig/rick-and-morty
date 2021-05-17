@@ -2,33 +2,46 @@
      <header  class="header" >
          <div class="logo">[ Rick & Morty ]</div>
        <nav >
-             <router-link  class="link" to="/">Home</router-link> 
-             <router-link  class="link" to="/characters">Characters</router-link> 
-       </nav>
+            <div ref="navLink" class="nav-links">
+                 <router-link @click="handle"   class="link" to="/">Home</router-link> 
+                 <router-link @click="handle"   class="link" to="/characters">Characters</router-link> 
+            </div>
 
-       <div @click="handle" class="burger">
-           <div class="line one"></div>
-           <div class="line two"></div>
-           <div class="line three"></div>
-       </div>
+            <div @click="handle" class="burger">
+                <div class="line one"></div>
+                <div class="line two"></div>
+                <div class="line three"></div>
+            </div>
+       </nav>
      </header>
 </template>
 
 <script>
-// import {ref} from 'vue'
+import { ref } from 'vue'
 
 export default {
     setup() {
+        const navLink = ref(null)
+
 
         function handle(e) {
             // const one  = e.path[1].querySelector('.one')
             // const two  = e.path[1].querySelector('.two')
             // const three  = e.path[1].querySelector('.three')
-            const container = e.path[1]
+            console.log(e)
+            const container = e.target
+            const links = navLink.value.querySelectorAll('.link')
+
             container.classList.toggle('change')
+            navLink.value.classList.toggle('open')
+
+           links.forEach(link => {
+               link.classList.toggle('fade')
+           });
+
         }
 
-        return { handle }
+        return { handle, navLink }
     }
 }
 </script>
@@ -51,8 +64,15 @@ export default {
 
 .header nav {
     width: 30%;
-    display: flex;
     height: 100%;
+    border: 1px solid red;
+}
+
+.nav-links {
+    width: 100%;
+    border: 1px solid red;
+    height: 100%;
+    display: flex;
     justify-content: space-around;
     align-items: center;
 }
@@ -98,17 +118,75 @@ export default {
 }
 
 @media screen and (max-width: 800px) {
-    .header nav {
-        display: none;
+    .logo {
+        z-index: 5;
+        border: 1px solid red ;
+        position:absolute;
     }
 
-    .burger {
-        display: inline-block;
-        cursor: pointer;
-        /* border: 1px solid red; */
+    .nav-links {
+        height: 25vh;
+        background: #5b78c7;
+        flex-direction: column;
+        justify-content: initial;
         position: relative;
-        right: 10px;
-        transform: rotate(180deg);
+         clip-path: circle(0px at 92% 12%);
+        -webkit-clip-path: circle(0px at 92% 12%);
+        pointer-events: none;
+        transition: all 1s ease-in-out ;
+    }
+
+    .link {
+        color: white;
+        font-size: 1.2rem;
+        /* border: 1px solid red; */
+        position: absolute;
+        bottom: 40%;
+        left: 50%;
+        transform: translate(-50%,-40%);
+        display: inline-block;
+        letter-spacing: 2px;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    .nav-links.open {
+        clip-path: circle(200% at 69% 12%);
+        -webkit-clip-path: circle(100% at 69% 12%);
+        pointer-events: all;
+    }
+
+    .link:nth-child(1) {
+        transition: all .5s ease .4s;
+    }
+
+    .link:nth-child(2) {
+        bottom: 10%;
+        left: 50%;
+        transform: translate(-50%, -10%);
+        transition: all .5s ease .6s;
+    }
+
+    .link.fade {
+        opacity: 1;
+    }
+
+    .header nav {
+        position: relative;
+        width: 100%;
+    }
+
+  
+    .burger {
+        display: initial;
+        cursor: pointer;
+        position: absolute;
+        right: 5%;
+        top: 50%;
+        transform: rotate(180deg) ;
+        -webkit-transform: rotate(180deg) ;
+        transform: translate(-5%, -50%);
+        -webkit-transform: translate(-5%, -50%);
     }
 
     .line{
@@ -117,12 +195,13 @@ export default {
         background: black;
         margin-top: 5px;
         border-radius: 2px;
-        transition: .5s;
+        transition: .5s ease-out .3s;
     }
+
+    
     .change .one {
     -webkit-transform: rotate(-45deg) translate(-7px, 6px);
     transform: rotate(-45deg) translate(-7px, 6px);
-    background: red;
     }
 
     .change .two {
@@ -132,7 +211,6 @@ export default {
     .change .three {
         -webkit-transform: rotate(45deg) translate(-7px, -6px) ;
         transform: rotate(45deg) translate(-7px, -6px) ;
-        background: red;
     }
 }
 </style>
