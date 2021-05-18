@@ -29,11 +29,17 @@ export default {
             // const two  = e.path[1].querySelector('.two')
             // const three  = e.path[1].querySelector('.three')
             console.log(e)
-            const container = e.target
+            // const container = 
             const links = navLink.value.querySelectorAll('.link')
 
-            container.classList.toggle('change')
-            navLink.value.classList.toggle('open')
+            if(e.target.className.includes('burger') ){
+                e.target.classList.toggle('change')
+                navLink.value.classList.toggle('open')
+            }
+            else if(e.target.className.includes('line')) {
+                e.target.offsetParent.classList.toggle('change')
+                navLink.value.classList.toggle('open')
+            }
 
            links.forEach(link => {
                link.classList.toggle('fade')
@@ -59,18 +65,15 @@ export default {
     top: 0;
     width: 100%;
     z-index: 10;
-    border: 1px solid red;
 }
 
 .header nav {
     width: 30%;
     height: 100%;
-    border: 1px solid red;
 }
 
 .nav-links {
     width: 100%;
-    border: 1px solid red;
     height: 100%;
     display: flex;
     justify-content: space-around;
@@ -125,8 +128,6 @@ export default {
     }
 
     .nav-links {
-        height: 25vh;
-        background: #5b78c7;
         flex-direction: column;
         justify-content: initial;
         position: relative;
@@ -134,6 +135,13 @@ export default {
         -webkit-clip-path: circle(0px at 92% 12%);
         pointer-events: none;
         transition: all 1s ease-in-out ;
+        height: 25vh;
+        background: #5b78c7;
+    }
+
+      .header nav {
+        position: relative;
+        width: 100%;
     }
 
     .link {
@@ -171,11 +179,6 @@ export default {
         opacity: 1;
     }
 
-    .header nav {
-        position: relative;
-        width: 100%;
-    }
-
   
     .burger {
         display: initial;
@@ -195,7 +198,7 @@ export default {
         background: black;
         margin-top: 5px;
         border-radius: 2px;
-        transition: .5s ease-out .3s;
+        transition: .5s ease-out;
     }
 
     
