@@ -3,11 +3,11 @@
          <div class="logo">[ Rick & Morty ]</div>
        <nav >
             <div ref="navLink" class="nav-links">
-                 <router-link @click="handle"   class="link" to="/">Home</router-link> 
-                 <router-link @click="handle"   class="link" to="/characters">Characters</router-link> 
+                 <router-link @click="handle" class="link" to="/">Home</router-link> 
+                 <router-link  @click="handle"  class="link" to="/characters">Characters</router-link> 
             </div>
 
-            <div @click="handle" class="burger">
+            <div ref="burger" @click="handle" class="burger">
                 <div class="line one"></div>
                 <div class="line two"></div>
                 <div class="line three"></div>
@@ -22,32 +22,30 @@ import { ref } from 'vue'
 export default {
     setup() {
         const navLink = ref(null)
+        const burger = ref('null')
 
 
         function handle(e) {
-            // const one  = e.path[1].querySelector('.one')
-            // const two  = e.path[1].querySelector('.two')
-            // const three  = e.path[1].querySelector('.three')
-            console.log(e)
-            // const container = 
             const links = navLink.value.querySelectorAll('.link')
+            
+            burger.value.classList.toggle('change')
+            navLink.value.classList.toggle('open')
+            console.log(e.target)
+    
+                 links.forEach(link => {
+                     link.classList.add('fade')
+                 });
 
-            if(e.target.className.includes('burger') ){
-                e.target.classList.toggle('change')
-                navLink.value.classList.toggle('open')
+             if(e.target.className.includes('link')) {
+                    burger.value.classList.remove('change')
+                    navLink.value.classList.remove('open')
+                    links.forEach(link => {
+                     link.classList.remove('fade')
+                 });
             }
-            else if(e.target.className.includes('line')) {
-                e.target.offsetParent.classList.toggle('change')
-                navLink.value.classList.toggle('open')
-            }
-
-           links.forEach(link => {
-               link.classList.toggle('fade')
-           });
-
         }
 
-        return { handle, navLink }
+        return { handle, navLink, burger }
     }
 }
 </script>
@@ -134,7 +132,7 @@ export default {
          clip-path: circle(0px at 92% 12%);
         -webkit-clip-path: circle(0px at 92% 12%);
         pointer-events: none;
-        transition: all 1s ease-in-out ;
+        transition: all .7s ease-in-out ;
         height: 25vh;
         background: #5b78c7;
     }
