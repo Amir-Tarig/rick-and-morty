@@ -23,7 +23,7 @@
 
  </div>
       <router-view></router-view>
- <div @click="fetchPage" class="arrows">
+ <div ref="arrowsContainer" @click="fetchPage" class="arrows">
      <span  class="rightA">&#187;</span>
      <span  class="leftA">&#171;</span>
  </div>
@@ -44,6 +44,7 @@ export default {
        let prevPage = ref('')
        const inputValue = ref(null)
        let noMatching = ref(true)
+       const arrowsContainer = ref(null)
 
        const beforeEnter = (el) => {
             el.style.opacity = 0;
@@ -79,7 +80,10 @@ export default {
                    character.value = []
                    fetch(nextPage.value)
                    .then(res => res.json())
-                   .then(char => character.value = char)
+                   .then(char => {
+                       character.value = char
+                          document.body.scrollIntoView({behavior: 'smooth'})
+                   })
                }
            } else if (e.target.classList == "leftA") {
                 if(character.value.info.prev !== null){
@@ -88,7 +92,10 @@ export default {
                    character.value = []
                    fetch(prevPage.value)
                    .then(res => res.json())
-                   .then(char => character.value = char)
+                   .then(char => {
+                       character.value = char
+                        document.body.scrollIntoView({behavior: 'smooth'})
+                   })
                }
            }
        }
@@ -129,7 +136,7 @@ export default {
 
         return { noMatching,beforeEnter, enter, 
         character, error ,loading, fetchPage, 
-        nextPage, prevPage, handleSearch, inputValue }
+        nextPage, prevPage, handleSearch, inputValue , arrowsContainer}
   }
 }
 </script>
@@ -150,7 +157,7 @@ export default {
     /* border: 1px solid red; */
     color: white;
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr) );
+   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
    grid-gap: 20px;
    padding:  1em;
    position: relative;
@@ -270,5 +277,60 @@ form input[type=text] {
 
 .link:hover {
     color: blue;
+}
+
+
+@media screen and (max-width: 1024px) {
+ .charContainer {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    background: rgba(255, 255, 255, 0.1);
+    grid-gap: 10px;
+    padding: 0;
+ }
+
+ .innerWrapper {
+    grid-template-columns: 200px 1fr;
+    grid-gap: 20px;
+ }
+
+ .charDetails{
+     line-height: 2;
+     /* border: 1px solid red; */
+ }
+}
+
+@media screen and (max-width: 500px) {
+    .charContainer {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+         grid-gap: 20px;
+    }
+        .innerWrapper{
+             padding: 10px 10px;
+            grid-template-columns: 150px 1fr;
+    }
+
+    .charDetails {
+        line-height: 1.2;
+    }
+
+}
+
+@media screen and (max-width: 350px) {
+    .charContainer {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+         grid-gap: 20px;
+    }
+        .innerWrapper{
+             padding: 10px 10px;
+            grid-template-columns: 100px 1fr;
+    }
+
+    .charDetails {
+        line-height: 1;
+    }
+
+    .artWork {
+        border: 1px solid yellow;
+    }
 }
 </style>

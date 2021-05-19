@@ -18,19 +18,19 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
     setup() {
         const navLink = ref(null)
         const burger = ref('null')
-
+        const router = useRouter()
 
         function handle(e) {
             const links = navLink.value.querySelectorAll('.link')
             
             burger.value.classList.toggle('change')
             navLink.value.classList.toggle('open')
-            console.log(e.target)
     
                  links.forEach(link => {
                      link.classList.add('fade')
@@ -43,6 +43,17 @@ export default {
                      link.classList.remove('fade')
                  });
             }
+
+            router.beforeEach ((to) => {
+                if(to.name === 'TheLocations') {
+                     burger.value.classList.remove('change')
+                    navLink.value.classList.remove('open')
+                    links.forEach(link => {
+                     link.classList.remove('fade')
+                 });
+                }
+            })
+
         }
 
         return { handle, navLink, burger }
@@ -121,7 +132,6 @@ export default {
 @media screen and (max-width: 800px) {
     .logo {
         z-index: 5;
-        border: 1px solid red ;
         position:absolute;
     }
 
@@ -135,6 +145,11 @@ export default {
         transition: all .7s ease-in-out ;
         height: 25vh;
         background: #5b78c7;
+    }
+
+    .header {
+        width: 100%;
+        right: 0;
     }
 
       .header nav {
@@ -212,6 +227,18 @@ export default {
     .change .three {
         -webkit-transform: rotate(45deg) translate(-7px, -6px) ;
         transform: rotate(45deg) translate(-7px, -6px) ;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-width: 900px) {
+    .header {
+        height: 10vh;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-width: 600px) {
+    .header {
+        height: 13vh;
     }
 }
 </style>
