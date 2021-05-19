@@ -1,9 +1,10 @@
 <template>
-     <p class="resLoading" v-if="loading">Loading residents</p>
-      <p class="resError" v-if="error">We couldn't display the dimention details !!!</p>
+     <p class="resLoading" v-if="loading">Loading The Current Location Details</p>
+      <p class="resError" v-if="error">Somthing Went Wrong We couldn't display the Current Location details !!!</p>
   <div class="location" v-for="loc in location" :key="loc.id">
       <p><span>Dimention : </span> {{ loc.dimension }}</p>
       <p><span>Name : </span> {{ loc.name }}</p>
+      <p><span>Population : </span> {{ loc.residents.length }}</p>
       <p><span>Type : </span> {{ loc.type }}</p>
   </div> 
 
@@ -82,6 +83,7 @@ export default {
     })
     .then(data =>{
        location.value = data.results
+       console.log(location.value)
       //  residents.value = location.value[0].residents
       //  fetchResidents([...location.value[0].residents])
       fetchChar(location.value[0].residents)
@@ -134,8 +136,9 @@ export default {
   height: 80vh;
   overflow: auto;
   scroll-snap-type: y mandatory;
-  /* scrollbar-width: none; */
+  /* scrollbar-width: none; */;
 }
+
 
 .container::-webkit-scrollbar {
   width: 0;
@@ -187,5 +190,11 @@ div {
   color: white;
   text-align: center;
   padding-top: 2em;
+}
+
+@media screen and (max-width: 500px) {
+  .location p {
+    padding-left: 1em;
+  }
 }
 </style>

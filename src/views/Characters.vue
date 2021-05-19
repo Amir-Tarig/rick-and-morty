@@ -295,7 +295,6 @@ form input[type=text] {
 
  .charDetails{
      line-height: 2;
-     /* border: 1px solid red; */
  }
 }
 
@@ -329,8 +328,7 @@ form input[type=text] {
         line-height: 1;
     }
 
-    .artWork {
-        border: 1px solid yellow;
-    }
 }
+
+
 </style>
