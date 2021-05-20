@@ -1,15 +1,15 @@
 <template>
       <TheHeroVideo />
-    <div class="trailerContainer">
+    <!-- <div class="trailerContainer">
         <div id="video">
-          <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/F6Zy_mLgSNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/F6Zy_mLgSNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div id="dis">
             <h2>RICK AND MORTY SEASON 5 UNCENSORED TRAILER!</h2>
             <p>Now you can start asking us about season 6. Rick and Morty returns for season 5 on Sunday, June 20 at 11pm ET/PT on Adult Swim.</p>
             <button class="btn">Play</button>
         </div>
-   </div>
+   </div> -->
 
 </template>
 
@@ -45,8 +45,9 @@ export default {
 }
 
 #video iframe{
+  aspect-ratio: 16 / 9;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 #dis{
@@ -72,4 +73,6 @@ export default {
   font-size: 17px;
   cursor: pointer;
 }
+
+
 </style>
