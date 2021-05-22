@@ -18,6 +18,11 @@ const routes = [
     props: true ,
     component: () => import(/* webpackChunkName: "TheLocations" */ '../views/TheLocations.vue')
   },
+  {
+    path: "/TheOfficialTrailer",
+    name: "TheOfficialTrailer",
+    component: () => import(/* webpackChunkName: "Trailer" */ '@/components/video.vue')
+  },
   
 ]
 
