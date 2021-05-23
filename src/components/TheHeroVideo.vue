@@ -142,6 +142,10 @@ export default {
        width: 400px;
        top: 50%;
     }
+
+    .btnContainer {
+        justify-content: center;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -214,15 +218,17 @@ export default {
 
     .rmImg {
         width: 150px;
-        top : 50%;
+        top : 30%;
+        left: -10%;
         display: inline-block;
         margin-left: 0;
-        /* transform: rotate(-70deg); */
+        transform: rotate(-90deg);
     }
 }
 
 @media screen and (max-width: 320px) {
-   
+
+  
     .btn {
         padding: .4em .7em;
         letter-spacing: 0;

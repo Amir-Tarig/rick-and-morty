@@ -106,6 +106,19 @@ export default {
     grid-template-columns: 1fr;
   }
 }
+
+@media screen  and (max-width: 400px){
+  #dis {
+    text-align: center;
+  }
+  #dis h2 {
+    font-size: 1.3em;
+  }
+
+  #dis p {
+    font-size: .8em;
+  }
+}
 /* 
 
 .trailerContainer{

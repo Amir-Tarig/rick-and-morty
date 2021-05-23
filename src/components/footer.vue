@@ -87,4 +87,11 @@ export default {
   transform: translateY(-20px);
 }
 
+@media screen and (max-width: 700px) {
+  .copyright {
+    text-align: center;
+    padding: 0 .5em;
+  }
+}
+
 </style>
