@@ -19,7 +19,7 @@
         </div>
             <img class="rmImg" src="https://media.cdn.adultswim.com/uploads/20210428/21428161947-rick-and-morty-logo-png.png" alt="">
         <div class="btnContainer">
-            <button class="btn">CHARACTERS</button>
+            <router-link to="/characters"><button class="btn">CHARACTERS</button></router-link>
             <!-- <button class="btn">LOCATIONS</button> -->
         </div>
     </div>
