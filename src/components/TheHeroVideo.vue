@@ -13,7 +13,7 @@
     <div class="container">
         <div class="videoContainer">
             <video autoplay loop muted>
-                <source src="@/assets/tinyrick.mp4">
+                <source src="@/assets/tinyrick.mp4" type="video/mp4">
                 <img src="https://media.cdn.adultswim.com/uploads/20200317/203171153217-rick-and-morty.png" alt="Rick and Morty">
             </video>
         </div>
