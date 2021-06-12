@@ -12,7 +12,7 @@
     
     <div class="container">
         <div class="videoContainer">
-            <video autoplay loop muted>
+            <video ref="video" autoplay loop muted="muted">
                 <source src="@/assets/tinyrick.mp4" type="video/mp4">
                 <img src="https://media.cdn.adultswim.com/uploads/20200317/203171153217-rick-and-morty.png" alt="Rick and Morty">
             </video>
@@ -28,8 +28,17 @@
 </template>
 
 <script>
+// import { ref } from '@vue/reactivity'
+// import { onMounted } from '@vue/runtime-core'
 export default {
+    // setup() {
+    //     const video = ref(null)
 
+    //     onMounted(() => { 
+    //         video.muted = 'muted'
+    //     })
+    //     return { video }
+    // }
 }
 </script>
 
